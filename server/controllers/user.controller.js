@@ -1,8 +1,12 @@
 const User = require('../models/user.model')
+const {validationResult} = require('express-validator')
+
 module.exports = {
 	createUser: async (req, res) => {
 		try {
-			// TODO: Validate user inputs
+			const errors = validationResult(req)
+			if (!errors.isEmpty())
+				return res.status(400).json({ error: errors.array().map(error => error.msg)[0] })
 			const { name, email, phoneNumber, password, userType } = req.body
 			let user = User.findOne({ email })
 			// if user already exists
@@ -24,7 +28,11 @@ module.exports = {
 	},
 
 	login: async (req, res) => {
-		// TODO: Validate user inputs
+		const errors = validationResult(req)
+		if (!errors.isEmpty())
+			return res.status(400).json({
+				errors: errors.array().map(error => error.msg)[0]
+			})
 		try {
 			const { email, password } = req.body
 			const user = await User.findByCredentials(email, password)
