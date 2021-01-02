@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
-	// TODO: Add validations
 	userType: {
 		type: String,
 		enum: ['customer', 'admin', 'restaurant'],

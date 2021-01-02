@@ -1,26 +1,31 @@
 const User = require('../models/user.model')
-const {validationResult} = require('express-validator')
+const { validationResult } = require('express-validator')
 
 module.exports = {
 	createUser: async (req, res) => {
 		try {
 			const errors = validationResult(req)
 			if (!errors.isEmpty())
-				return res.status(400).json({ error: errors.array().map(error => error.msg)[0] })
+				return res
+					.status(400)
+					.json({ error: errors.array().map(error => error.msg)[0] })
+			console.log(req.body)
 			const { name, email, phoneNumber, password, userType } = req.body
-			let user = User.findOne({ email })
+			let user = await User.findOne({ email })
 			// if user already exists
 			if (user)
 				return res.status(400).json({
 					error: 'Email is already taken'
 				})
 			// User does not exist, create one
-			user = new User(name, email, phoneNumber, password, userType)
+			user = new User({ name, email, phoneNumber, password, userType })
 			await user.save()
 			const token = user.generateAuthToken()
+			console.log(res)
 			return res.status(201).json({ user, token })
 		} catch (error) {
 			console.log(error)
+			console.log(res)
 			return res.status(400).json({
 				error: error.message
 			})
@@ -42,6 +47,7 @@ module.exports = {
 				})
 			}
 			const token = user.generateAuthToken()
+			console.log(res)
 			return res.status(200).json({
 				token
 			})

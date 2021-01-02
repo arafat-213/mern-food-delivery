@@ -1,6 +1,7 @@
 const express = require('express')
 const connectDB = require('./config/db')
 const bodyParser = require('body-parser')
+const userRouter = require('./routes/user.route')
 
 require('dotenv').config({
 	path: './config/config.env'
@@ -9,13 +10,22 @@ require('dotenv').config({
 const app = express()
 
 // use body parser
+// Use body parser
 app.use(
 	bodyParser.urlencoded({
 		extended: false
 	})
 )
+
+app.use(bodyParser.json())
+
 // connect the databse
 connectDB()
+
+// Load user routes
+
+// use routes
+app.use('/api', userRouter)
 
 const PORT = process.env.PORT || 5000
 
