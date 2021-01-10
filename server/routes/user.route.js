@@ -12,13 +12,13 @@ const router = express.Router()
  * @desc Register user
  * @access Public
  */
-router.post('/user/register', registerValidator, createUser)
+router.post('/register', registerValidator, createUser)
 
 /*
  * @route POST api/user/login
  * @desc Log in user
  * @access Public
  */
-router.post('/user/login', loginValidator, login)
+router.post('/login', loginValidator, login)
 
 module.exports = router
