@@ -2,6 +2,7 @@ const express = require('express')
 const connectDB = require('./config/db')
 const bodyParser = require('body-parser')
 const userRouter = require('./routes/user.route')
+const restaurantRouter = require('./routes/restaurant.route')
 
 require('dotenv').config({
 	path: './config/config.env'
@@ -25,7 +26,8 @@ connectDB()
 // Load user routes
 
 // use routes
-app.use('/api', userRouter)
+app.use('/api/user', userRouter)
+app.use('/api/restaurant', restaurantRouter)
 
 const PORT = process.env.PORT || 5000
 
