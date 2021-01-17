@@ -1,7 +1,10 @@
 const express = require('express')
 const {
 	listRestaurants,
-	createRestaurant
+	createRestaurant,
+	getRestaurant,
+	addItemToMenu,
+	deleteItemFromMenu
 } = require('../controllers/restaurant.controller')
 const {
 	createRestaurantValidator
@@ -20,16 +23,30 @@ router.post('/', [auth, createRestaurantValidator], createRestaurant)
 
 /*
  * @route GET api/restaurant/list
- * @desc Create a new restaurant
+ * @desc Get the list of restaurants
  * @access Public
  */
 router.get('/list', listRestaurants)
 
 /*
- * @route GET api/restaurant/:id
- * @desc Get a restaurant by it's id
+ * @route GET api/restaurant/:restaurantId
+ * @desc Get a restaurant by its id
  * @access Public
  */
-router.get('/:id', listRestaurants)
+router.get('/:restaurantId', getRestaurant)
+
+/*
+ * @route PUT api/restaurant/menu
+ * @desc Add a menu item to the menu
+ * @access Private
+ */
+router.put('/menu', auth, addItemToMenu)
+
+/*
+ * @route DELETE api/restaurant/menu/:itemId
+ * @desc Delete the menu for a restaurant
+ * @access Private
+ */
+router.delete('/menu/:itemId', auth, deleteItemFromMenu)
 
 module.exports = router

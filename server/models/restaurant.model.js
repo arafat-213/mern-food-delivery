@@ -20,9 +20,22 @@ const RestaurantSchema = new mongoose.Schema({
 	description: {
 		type: String
 	},
-	menu: {
-		type: Array
-	}
+	menu: [
+		{
+			itemName: {
+				type: String,
+				required: [true, 'Item name is required']
+			},
+			itemPrice: {
+				type: Number,
+				required: [true, 'Item price is required']
+			},
+			itemDescription: {
+				type: String,
+				required: [true, 'Item description is required']
+			}
+		}
+	]
 })
 
 module.exports = Restaurant = mongoose.model('restaurant', RestaurantSchema)
