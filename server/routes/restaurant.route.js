@@ -4,6 +4,7 @@ const {
 	createRestaurant,
 	getRestaurant,
 	addItemToMenu,
+	updateItemFromMenu,
 	deleteItemFromMenu
 } = require('../controllers/restaurant.controller')
 const {
@@ -41,6 +42,13 @@ router.get('/:restaurantId', getRestaurant)
  * @access Private
  */
 router.put('/menu', auth, addItemToMenu)
+
+/*
+ * @route PUT api/restaurant/menu/:itemId
+ * @desc Edit a menu item from the menu
+ * @access Private
+ */
+router.put('/menu/:itemId', auth, updateItemFromMenu)
 
 /*
  * @route DELETE api/restaurant/menu/:itemId

@@ -134,5 +134,39 @@ module.exports = {
 			})
 		}
 	},
+
+	updateItemFromMenu: async (req, res) => {
+		try {
+			const restaurant = await Restaurant.findOne({
+				owner: req.user._id
+			})
+			if (!restaurant)
+				return res.status(403).json({
+					error: 'Forbidden! Access denied.'
+				})
+			let indexOfFieldToBeUpdated = restaurant.menu.findIndex(
+				item => item._id.toString() === req.params.itemId
+			)
+			if (indexOfFieldToBeUpdated === -1)
+				return res.status(404).json({
+					error: 'No item found. Please try again'
+				})
+			let { itemName, itemDescription, itemPrice } = req.body
+			restaurant.menu[indexOfFieldToBeUpdated] = {
+				itemName,
+				itemDescription,
+				itemPrice,
+				_id: req.params.itemId
+			}
+
+			await restaurant.save()
+			return res.status(200).json({ restaurant })
+		} catch (error) {
+			console.error(error)
+			if (error.name === 'CastError')
+				return res.status(404).json({ error: 'Menu item not found' })
+			return res.status(500).json({ error: 'Internal Server Error' })
+		}
+	},
 	updateRestaurant: () => {}
 }
