@@ -25,6 +25,10 @@ const OrderSchema = new mongoose.Schema({
 		],
 		default: 'W'
 	},
+	totalAmount: {
+		type: Number,
+		required: true
+	},
 	orderContent: [
 		{
 			itemName: {

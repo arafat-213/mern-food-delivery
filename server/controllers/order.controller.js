@@ -4,14 +4,16 @@ const Restaurant = require('../models/restaurant.model')
 module.exports = {
 	createOrder: async (req, res) => {
 		try {
+			let totalAmount = 0
 			const { restaurant, orderContent } = req.body
+			orderContent.map(item => (totalAmount += item.itemPrice))
 			let order = new Order({
 				customer: req.user._id,
 				restaurant,
 				orderContent,
+				totalAmount,
 				address: req.user.address
 			})
-			console.log('current logged in user', req.user._id)
 			await order.save()
 			res.status(201).json({ order })
 		} catch (error) {
