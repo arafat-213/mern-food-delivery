@@ -7,7 +7,10 @@ exports.registerValidator = [
 	check('password', 'Password must contain at least 6 characters')
 		.isLength({ min: 6 })
 		.matches(/\d/)
-		.withMessage('Password must contain a number')
+		.withMessage('Password must contain a number'),
+	check('address', 'Insufficient address').isLength({
+		min: 8
+	})
 ]
 
 exports.loginValidator = [

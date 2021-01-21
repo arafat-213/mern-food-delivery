@@ -10,7 +10,14 @@ module.exports = {
 					.status(400)
 					.json({ error: errors.array().map(error => error.msg)[0] })
 			console.log(req.body)
-			const { name, email, phoneNumber, password, userType } = req.body
+			const {
+				name,
+				email,
+				phoneNumber,
+				password,
+				userType,
+				address
+			} = req.body
 			let user = await User.findOne({ email })
 			// if user already exists
 			if (user)
@@ -18,7 +25,14 @@ module.exports = {
 					error: 'Email is already taken'
 				})
 			// User does not exist, create one
-			user = new User({ name, email, phoneNumber, password, userType })
+			user = new User({
+				name,
+				email,
+				phoneNumber,
+				password,
+				userType,
+				address
+			})
 			await user.save()
 			const token = user.generateAuthToken()
 			console.log(res)
