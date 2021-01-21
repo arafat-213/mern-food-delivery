@@ -50,5 +50,32 @@ module.exports = {
 		} catch (error) {
 			console.error(error)
 		}
+	},
+	changeOrderStatus: async (req, res) => {
+		try {
+			const { newStatus } = req.body
+			let restaurant = await Restaurant.findOne({
+				owner: req.user._id
+			})
+			let order = await Order.findOne({
+				restaurant: restaurant._id,
+				_id: req.params.orderId
+			})
+			if (!order)
+				return res.status(404).json({
+					error: 'Order not found'
+				})
+
+			order.orderStatus = newStatus
+
+			await order.save()
+
+			return res.status(200).json({
+				order
+			})
+		} catch (error) {
+			console.error(error)
+			res.status(500).json({ error: 'Internal Server Error' })
+		}
 	}
 }
