@@ -3,11 +3,11 @@ const mongoose = require('mongoose')
 const OrderSchema = new mongoose.Schema({
 	customer: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'user'
 	},
 	address: {
 		type: String,
-		required: true
+		required: [true, 'Address is required']
 	},
 	restaurant: {
 		type: mongoose.Schema.Types.ObjectId,
