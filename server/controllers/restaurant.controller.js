@@ -151,11 +151,12 @@ module.exports = {
 				return res.status(404).json({
 					error: 'No item found. Please try again'
 				})
-			let { itemName, itemDescription, itemPrice } = req.body
+			let { itemName, itemDescription, itemPrice, isAvailable } = req.body
 			restaurant.menu[indexOfFieldToBeUpdated] = {
 				itemName,
 				itemDescription,
 				itemPrice,
+				isAvailable,
 				_id: req.params.itemId
 			}
 

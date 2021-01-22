@@ -33,6 +33,10 @@ const RestaurantSchema = new mongoose.Schema({
 			itemDescription: {
 				type: String,
 				required: [true, 'Item description is required']
+			},
+			isAvailable: {
+				type: Boolean,
+				default: true
 			}
 		}
 	]
