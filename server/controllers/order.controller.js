@@ -32,6 +32,7 @@ module.exports = {
 			})
 				.populate('customer', '-_id -customerType -__v')
 				.select('-restaurant -__v')
+				.sort('-createdAt')
 			res.status(200).json({ orders })
 		} catch (error) {
 			console.error(error)
@@ -48,6 +49,7 @@ module.exports = {
 			})
 				.populate('restaurant', '-owner -menu -_id -__v')
 				.select('-customer')
+				.sort('-createdAt')
 			res.status(200).json({ orders })
 		} catch (error) {
 			console.error(error)
