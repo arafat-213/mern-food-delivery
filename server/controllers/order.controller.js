@@ -68,10 +68,50 @@ module.exports = {
 					error: 'Order not found'
 				})
 
-			order.orderStatus = newStatus
+			switch (order.orderStatus) {
+				case 'W':
+					if (newStatus === 'A' || newStatus === 'R')
+						order.orderStatus = newStatus
+					else
+						return res.status(400).json({
+							error:
+								'Order can be either Accepted or Rejected only from this state'
+						})
+					break
+				case 'A':
+					if (newStatus === 'I') order.orderStatus = newStatus
+					else
+						return res.status(400).json({
+							error: `Order can only be moved to 'In the kitchen' state from here`
+						})
+					break
+				case 'R':
+					return res.status(400).json({
+						error:
+							'Orders once rejected can not be processed further.'
+					})
+				case 'I':
+					if (newStatus === 'O') order.orderStatus = newStatus
+					else
+						return res.status(400).json({
+							error: `Order can only be moved to state 'Out for delivery' from here`
+						})
+					break
+				case 'O':
+					if (newStatus === 'D') order.orderStatus = newStatus
+					else
+						return res.status(400).json({
+							error: `Order can only be moved to state 'Delivered' from here`
+						})
+					break
+				case 'D':
+					return res.status(400).json({
+						error:
+							'Orders once delivered, can not be processed further.'
+					})
+			}
 
 			await order.save()
-
 			return res.status(200).json({
 				order
 			})
