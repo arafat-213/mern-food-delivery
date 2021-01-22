@@ -52,7 +52,7 @@ module.exports = {
 						'You do not have sufficient rights to add a restaurant'
 				})
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 			res.staus(400).json({
 				error: error.message
 			})
@@ -63,7 +63,7 @@ module.exports = {
 			let restaurants = await Restaurant.find()
 			return res.status(200).json({ restaurants })
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 			return res
 				.status(400)
 				.json({ error: 'Unable to get restuarant list' })
@@ -106,10 +106,7 @@ module.exports = {
 				})
 
 			const { menu } = req.body
-			console.log('Menu: ', menu)
 			restaurant.menu.unshift(menu)
-			// restaurant.menu = [...restaurant.menu, menu]
-			console.log(restaurant)
 			await restaurant.save()
 			return res.status(201).json({
 				restaurant

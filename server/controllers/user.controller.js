@@ -9,7 +9,6 @@ module.exports = {
 				return res
 					.status(400)
 					.json({ error: errors.array().map(error => error.msg)[0] })
-			console.log(req.body)
 			const {
 				name,
 				email,
@@ -35,11 +34,9 @@ module.exports = {
 			})
 			await user.save()
 			const token = user.generateAuthToken()
-			console.log(res)
 			return res.status(201).json({ user, token })
 		} catch (error) {
-			console.log(error)
-			console.log(res)
+			console.error(error)
 			return res.status(400).json({
 				error: error.message
 			})
@@ -61,12 +58,11 @@ module.exports = {
 				})
 			}
 			const token = user.generateAuthToken()
-			console.log(res)
 			return res.status(200).json({
 				token
 			})
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 			return res.status(400).json({
 				error: error.message
 			})
