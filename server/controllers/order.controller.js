@@ -17,7 +17,7 @@ module.exports = {
 			await order.save()
 			res.status(201).json({ order })
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 			return res.status(500).json({
 				error: 'Internal Server Error'
 			})
@@ -57,11 +57,8 @@ module.exports = {
 	changeOrderStatus: async (req, res) => {
 		try {
 			const { newStatus } = req.body
-			let restaurant = await Restaurant.findOne({
-				owner: req.user._id
-			})
 			let order = await Order.findOne({
-				restaurant: restaurant._id,
+				restaurant: req.user.restaurant,
 				_id: req.params.orderId
 			})
 			if (!order)
@@ -76,7 +73,7 @@ module.exports = {
 					else
 						return res.status(400).json({
 							error:
-								'Order can be either Accepted or Rejected only from this state'
+								'Order can only be either Accepted or Rejected from this state'
 						})
 					break
 				case 'A':
