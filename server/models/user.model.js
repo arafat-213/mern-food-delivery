@@ -8,6 +8,9 @@ const userSchema = new mongoose.Schema({
 		enum: ['customer', 'admin', 'restaurant'],
 		default: 'customer'
 	},
+	restaurant: {
+		type: mongoose.Schema.Types.ObjectId
+	},
 	name: {
 		type: String,
 		required: true

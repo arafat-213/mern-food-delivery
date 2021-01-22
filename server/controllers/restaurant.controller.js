@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator')
 const Restaurant = require('../models/restaurant.model')
+const User = require('../models/user.model')
 
 module.exports = {
 	createRestaurant: async (req, res) => {
@@ -32,8 +33,19 @@ module.exports = {
 					description,
 					menu
 				})
+
+				let currentUserDocument = await User.findOne({
+					_id: req.user._id
+				})
+				currentUserDocument.restaurant = restaurant._id
+
+				await currentUserDocument.save()
+
+				// user object is updated. so, frontend will need a new jwt token which has new user properties encrypted
+				const token = currentUserDocument.generateAuthToken()
+
 				await restaurant.save()
-				return res.status(201).json({ restaurant })
+				return res.status(201).json({ restaurant, token })
 			} else
 				return res.status(403).json({
 					error:

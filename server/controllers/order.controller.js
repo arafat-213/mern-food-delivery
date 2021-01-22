@@ -26,9 +26,8 @@ module.exports = {
 
 	listOrdersForRestaurant: async (req, res) => {
 		try {
-			let restaurant = await Restaurant.findOne({ owner: req.user._id })
 			let orders = await Order.find({
-				restaurant: restaurant._id
+				restaurant: req.user.restaurant
 			})
 				.populate('customer', '-_id -customerType -__v')
 				.select('-restaurant -__v')
