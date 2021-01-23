@@ -1,10 +1,16 @@
 const Order = require('../models/order.model')
+const Restaurant = require('../models/restaurant.model')
 
 module.exports = {
 	createOrder: async (req, res) => {
 		try {
 			let totalAmount = 0
 			const { restaurant, cookingInstructions, orderContent } = req.body
+			let restaurantExists = await Restaurant.findOne({ _id: restaurant })
+			if (!restaurantExists)
+				return res.status(400).json({
+					error: 'Invalid restaurant selected'
+				})
 			orderContent.map(item => (totalAmount += item.itemPrice))
 			let order = new Order({
 				customer: req.user._id,
