@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const RestaurantSchema = new mongoose.Schema({
+const restaurantSchema = new mongoose.Schema({
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
@@ -42,4 +42,14 @@ const RestaurantSchema = new mongoose.Schema({
 	]
 })
 
-module.exports = Restaurant = mongoose.model('restaurant', RestaurantSchema)
+//Adds a virtual property of orders created by current user when populate() is called
+restaurantSchema.virtual('orders', {
+	ref: 'order',
+	localField: '_id',
+	foreignField: 'restaurant'
+})
+
+restaurantSchema.set('toObject', { virtuals: true })
+restaurantSchema.set('toJSON', { virtuals: true })
+
+module.exports = Restaurant = mongoose.model('restaurant', restaurantSchema)

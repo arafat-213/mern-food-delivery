@@ -34,15 +34,12 @@ module.exports = {
 					menu
 				})
 
-				let currentUserDocument = await User.findOne({
-					_id: req.user._id
-				})
-				currentUserDocument.restaurant = restaurant._id
+				req.user.restaurant = restaurant._id
 
-				await currentUserDocument.save()
+				await req.user.save()
 
 				// user object is updated. so, frontend will need a new jwt token which has new user properties encrypted
-				const token = currentUserDocument.generateAuthToken()
+				const token = req.user.generateAuthToken()
 
 				await restaurant.save()
 				return res.status(201).json({ restaurant, token })

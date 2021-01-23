@@ -1,5 +1,4 @@
 const Order = require('../models/order.model')
-const Restaurant = require('../models/restaurant.model')
 
 module.exports = {
 	createOrder: async (req, res) => {
@@ -26,13 +25,31 @@ module.exports = {
 
 	listOrdersForRestaurant: async (req, res) => {
 		try {
-			let orders = await Order.find({
-				restaurant: req.user.restaurant
+			if (!req.user.restaurant)
+				return res.status(403).json({
+					error: 'Forbidden. Access denied!'
+				})
+			await req.user
+				.populate({
+					path: 'restaurant',
+					populate: {
+						path: 'orders',
+						select: '-__v',
+						options: {
+							sort: {
+								createdAt: -1
+							}
+						},
+						populate: {
+							path: 'customer',
+							select: '-userType -_id -__v'
+						}
+					}
+				})
+				.execPopulate()
+			return res.status(200).json({
+				orders: req.user.restaurant.orders
 			})
-				.populate('customer', '-_id -customerType -__v')
-				.select('-restaurant -__v')
-				.sort('-createdAt')
-			res.status(200).json({ orders })
 		} catch (error) {
 			console.error(error)
 			res.status(500).json({
@@ -43,15 +60,27 @@ module.exports = {
 
 	listOrdersForCustomer: async (req, res) => {
 		try {
-			const orders = await Order.find({
-				customer: req.user._id
-			})
-				.populate('restaurant', '-owner -menu -_id -__v')
-				.select('-customer')
-				.sort('-createdAt')
-			res.status(200).json({ orders })
+			await req.user
+				.populate({
+					path: 'orders',
+					select: '-__v',
+					options: {
+						sort: {
+							createdAt: -1
+						}
+					},
+					populate: {
+						path: 'restaurant',
+						select: '-owner -__v -id -menu -description'
+					}
+				})
+				.execPopulate()
+			res.status(200).json({ orders: req.user.orders })
 		} catch (error) {
 			console.error(error)
+			return res.status(500).json({
+				error: 'Internal Server Error'
+			})
 		}
 	},
 	changeOrderStatus: async (req, res) => {

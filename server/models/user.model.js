@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
 		default: 'customer'
 	},
 	restaurant: {
-		type: mongoose.Schema.Types.ObjectId
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'restaurant'
 	},
 	name: {
 		type: String,
@@ -33,6 +34,13 @@ const userSchema = new mongoose.Schema({
 	}
 })
 
+//Adds a virtual property of orders created by current user when populate() is called
+userSchema.virtual('orders', {
+	ref: 'order',
+	localField: '_id',
+	foreignField: 'customer'
+})
+
 userSchema.statics.findByCredentials = async (email, password) => {
 	const user = await User.findOne({ email })
 	if (!user) {
@@ -47,7 +55,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.methods.generateAuthToken = function () {
 	const user = this
-	const token = jwt.sign({ user }, process.env.JWT_SECRET)
+	const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
 	return token
 }
 userSchema.pre('save', async function () {
