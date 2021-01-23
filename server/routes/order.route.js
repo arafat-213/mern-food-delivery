@@ -2,8 +2,6 @@ const express = require('express')
 const auth = require('../middleware/auth.middleware')
 const {
 	createOrder,
-	listOrdersForRestaurant,
-	listOrdersForCustomer,
 	changeOrderStatus,
 	listOrders
 } = require('../controllers/order.controller')
@@ -24,7 +22,7 @@ router.post('/', auth, createOrder)
 router.put('/:orderId', auth, changeOrderStatus)
 
 /*
- * @route GET api/order/restaurant
+ * @route GET api/order/
  * @route // GET /order => All of the orders
  * GET /order?completed=true => orders which are completed
  * GET /order?completed=false => orders which are not completed
@@ -38,13 +36,5 @@ router.put('/:orderId', auth, changeOrderStatus)
  * @access Private/restaurant/customer
  */
 router.get('/', auth, listOrders)
-router.get('/restaurant', auth, listOrdersForRestaurant)
-
-/*
- * @route GET api/order/customer
- * @desc Get all the orders for logged in customer
- * @access Private/customer
- */
-router.get('/customer', auth, listOrdersForCustomer)
 
 module.exports = router
