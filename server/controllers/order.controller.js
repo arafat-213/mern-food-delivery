@@ -4,11 +4,12 @@ module.exports = {
 	createOrder: async (req, res) => {
 		try {
 			let totalAmount = 0
-			const { restaurant, orderContent } = req.body
+			const { restaurant, cookingInstructions, orderContent } = req.body
 			orderContent.map(item => (totalAmount += item.itemPrice))
 			let order = new Order({
 				customer: req.user._id,
 				restaurant,
+				cookingInstructions,
 				orderContent,
 				totalAmount,
 				address: req.user.address

@@ -5,6 +5,9 @@ const OrderSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user'
 	},
+	cookingInstructions: {
+		type: String
+	},
 	address: {
 		type: String,
 		required: [true, 'Address is required']
