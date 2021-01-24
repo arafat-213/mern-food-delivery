@@ -34,14 +34,8 @@ const OrderSchema = new mongoose.Schema({
 	},
 	orderContent: [
 		{
-			itemName: {
-				type: String,
-				required: [true, 'Item name is required']
-			},
-			itemPrice: {
-				type: Number,
-				required: [true, 'Item price is required']
-			}
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'menuItem'
 		}
 	],
 	createdAt: {

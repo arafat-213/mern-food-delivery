@@ -11,16 +11,22 @@ module.exports = {
 				return res.status(400).json({
 					error: 'Invalid restaurant selected'
 				})
-			orderContent.map(item => (totalAmount += item.itemPrice))
+
 			let order = new Order({
 				customer: req.user._id,
 				restaurant,
+				totalAmount,
 				cookingInstructions,
 				orderContent,
-				totalAmount,
 				address: req.user.address
 			})
 			await order.save()
+
+			await order
+				.populate('orderContent', '-isAvailable -__v -_id -restaurant')
+				.execPopulate()
+			order.orderContent.map(item => (totalAmount += item.itemPrice))
+			order.totalAmount = totalAmount
 			res.status(201).json({ order })
 		} catch (error) {
 			console.error(error)
@@ -72,6 +78,10 @@ module.exports = {
 							populate: {
 								path: 'customer',
 								select: '-userType -_id -__v'
+							},
+							populate: {
+								path: 'orderContent',
+								select: '-_id -__v'
 							}
 						}
 					})
