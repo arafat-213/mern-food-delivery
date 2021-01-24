@@ -1,53 +1,45 @@
 const { validationResult } = require('express-validator')
 const Restaurant = require('../models/restaurant.model')
-const User = require('../models/user.model')
 
 module.exports = {
 	createRestaurant: async (req, res) => {
 		try {
 			const errors = validationResult(req)
 			if (!errors.isEmpty())
-				return res
-					.status(400)
-					.json({ errors: errors.array().map(error => error.msg)[0] })
-
-			const user = req.user
-			if (user.userType === 'restaurant') {
-				const {
-					name,
-					address,
-					phoneNumber,
-					description,
-					menu
-				} = req.body
-				let restaurant = await Restaurant.findOne({ name })
-				if (restaurant)
-					return res.status(400).json({
-						error: 'A restaurant with this name already exists'
-					})
-				restaurant = new Restaurant({
-					owner: user._id,
-					name,
-					address,
-					phoneNumber,
-					description,
-					menu
+				return res.status(400).json({
+					errors: errors.array().map(error => error.msg)[0]
+				})
+			const { name, address, phoneNumber, description, menu } = req.body
+			let restaurant = await Restaurant.findOne({ name })
+			if (restaurant)
+				return res.status(400).json({
+					error: 'A restaurant with this name already exists'
 				})
 
-				req.user.restaurant = restaurant._id
-
-				await req.user.save()
-
-				// user object is updated. so, frontend will need a new jwt token which has new user properties encrypted
-				const token = req.user.generateAuthToken()
-
-				await restaurant.save()
-				return res.status(201).json({ restaurant, token })
-			} else
-				return res.status(403).json({
-					error:
-						'You do not have sufficient rights to add a restaurant'
+			restaurant = await Restaurant.findOne({ owner: req.user._id })
+			if (restaurant)
+				return res.status(400).json({
+					error: 'You already have a restaurant created'
 				})
+
+			restaurant = new Restaurant({
+				owner: req.user._id,
+				name,
+				address,
+				phoneNumber,
+				description,
+				menu
+			})
+
+			req.user.restaurant = restaurant._id
+
+			await req.user.save()
+
+			// user object is updated. so, frontend will need a new jwt token which has new user properties encrypted
+			const token = req.user.generateAuthToken()
+
+			await restaurant.save()
+			return res.status(201).json({ restaurant, token })
 		} catch (error) {
 			console.error(error)
 			res.staus(400).json({

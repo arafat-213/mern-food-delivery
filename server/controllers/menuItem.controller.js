@@ -3,11 +3,6 @@ const MenuItem = require('../models/menuItem.model')
 module.exports = {
 	createMenuItem: async (req, res) => {
 		try {
-			if (req.user.userType !== 'restaurant') {
-				return res.status(403).json({
-					error: 'Forbidden! Access denied.'
-				})
-			}
 			const {
 				itemName,
 				itemPrice,
