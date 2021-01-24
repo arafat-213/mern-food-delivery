@@ -1,9 +1,11 @@
 const express = require('express')
 const connectDB = require('./config/db')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const userRouter = require('./routes/user.route')
 const restaurantRouter = require('./routes/restaurant.route')
 const orderRouter = require('./routes/order.route')
+const menuRouter = require('./routes/menuItem.route')
 
 require('dotenv').config({
 	path: './config/config.env'
@@ -11,7 +13,6 @@ require('dotenv').config({
 
 const app = express()
 
-// use body parser
 // Use body parser
 app.use(
 	bodyParser.urlencoded({
@@ -30,7 +31,12 @@ connectDB()
 app.use('/api/user', userRouter)
 app.use('/api/restaurant', restaurantRouter)
 app.use('/api/order', orderRouter)
+app.use('/api/menu', menuRouter)
 
+// cors config
+if (process.env.NODE_ENV === 'development') {
+	app.use(cors({ origin: process.env.CLIENT_URL }))
+}
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
