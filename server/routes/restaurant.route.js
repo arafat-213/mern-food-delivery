@@ -11,7 +11,7 @@ const {
 	createRestaurantValidator
 } = require('../validators/restaurant.validator')
 
-const auth = require('../middleware/auth.middleware')
+const { auth, restaurantProtected } = require('../middleware/auth.middleware')
 
 const router = express.Router()
 
@@ -20,7 +20,11 @@ const router = express.Router()
  * @desc Create a new restaurant
  * @access Private
  */
-router.post('/', [auth, createRestaurantValidator], createRestaurant)
+router.post(
+	'/',
+	[auth, restaurantProtected, createRestaurantValidator],
+	createRestaurant
+)
 
 /*
  * @route GET api/restaurant/list
@@ -35,13 +39,6 @@ router.get('/list', listRestaurants)
  * @access Public
  */
 router.get('/:restaurantId', getRestaurant)
-
-/*
- * @route PUT api/restaurant/menu
- * @desc Add a menu item to the menu
- * @access Private
- */
-router.put('/menu', auth, addItemToMenu)
 
 /*
  * @route PUT api/restaurant/menu/:itemId

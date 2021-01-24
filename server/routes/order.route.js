@@ -1,5 +1,5 @@
 const express = require('express')
-const auth = require('../middleware/auth.middleware')
+const { auth, restaurantProtected } = require('../middleware/auth.middleware')
 const {
 	createOrder,
 	changeOrderStatus,
@@ -19,7 +19,7 @@ router.post('/', auth, createOrder)
  * @desc Change the status of order
  * @access Private/restaurant
  */
-router.put('/:orderId', auth, changeOrderStatus)
+router.put('/:orderId', auth, restaurantProtected, changeOrderStatus)
 
 /*
  * @route GET api/order/
