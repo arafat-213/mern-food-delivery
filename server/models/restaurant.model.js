@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const restaurantSchema = new mongoose.Schema({
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User'
+		ref: 'user'
 	},
 	name: {
 		type: String,
@@ -19,32 +19,19 @@ const restaurantSchema = new mongoose.Schema({
 	},
 	description: {
 		type: String
-	},
-	menu: [
-		{
-			itemName: {
-				type: String,
-				required: [true, 'Item name is required']
-			},
-			itemPrice: {
-				type: Number,
-				required: [true, 'Item price is required']
-			},
-			itemDescription: {
-				type: String,
-				required: [true, 'Item description is required']
-			},
-			isAvailable: {
-				type: Boolean,
-				default: true
-			}
-		}
-	]
+	}
 })
 
 //Adds a virtual property of orders created by current user when populate() is called
 restaurantSchema.virtual('orders', {
 	ref: 'order',
+	localField: '_id',
+	foreignField: 'restaurant'
+})
+
+//Adds a virtual property of menuItems created by current user when populate() is called
+restaurantSchema.virtual('menu', {
+	ref: 'menuItem',
 	localField: '_id',
 	foreignField: 'restaurant'
 })

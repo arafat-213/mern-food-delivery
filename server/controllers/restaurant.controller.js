@@ -71,6 +71,7 @@ module.exports = {
 			let restaurant = await Restaurant.findOne({
 				_id: req.params.restaurantId
 			})
+			await restaurant.populate('menu', '-__v').execPopulate()
 			if (!restaurant)
 				return res.status(404).json({
 					error: 'No restaurant found'
