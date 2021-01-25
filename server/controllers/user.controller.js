@@ -59,7 +59,8 @@ module.exports = {
 			}
 			const token = user.generateAuthToken()
 			return res.status(200).json({
-				token
+				token,
+				user
 			})
 		} catch (error) {
 			console.error(error)
