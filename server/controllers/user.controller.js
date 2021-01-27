@@ -68,5 +68,18 @@ module.exports = {
 				error: error.message
 			})
 		}
+	},
+
+	getAuth: async (req, res) => {
+		try {
+			// Login with token for saved sessions
+			const user = await User.findById(req.user)
+			res.json({ user })
+		} catch (error) {
+			console.error(error)
+			res.status(500).json({
+				error: 'Internal Server Error'
+			})
+		}
 	}
 }

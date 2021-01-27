@@ -8,8 +8,23 @@ import Restaurant from './pages/Restaurant'
 // Redux
 import { Provider } from 'react-redux'
 import store from './store'
+import { loadUser } from './actions/auth.action'
+// Utils
+import setAuthToken from './utils/setAuthToken'
+import axios from 'axios'
 
+if (localStorage.token) setAuthToken(localStorage.token)
 const App = () => {
+	useEffect(() => {
+		store.dispatch(loadUser())
+		const getData = async () => {
+			const res = await axios.get(
+				'http://localhost:5000/api/restaurant/list'
+			)
+			console.log(res.data)
+		}
+		getData()
+	})
 	return (
 		<Provider store={store}>
 			<Router>

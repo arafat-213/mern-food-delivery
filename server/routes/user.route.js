@@ -3,8 +3,8 @@ const {
 	registerValidator,
 	loginValidator
 } = require('../validators/user.validator')
-const { createUser, login } = require('../controllers/user.controller')
-
+const { createUser, login, getAuth } = require('../controllers/user.controller')
+const { auth } = require('../middleware/auth.middleware')
 const router = express.Router()
 
 /*
@@ -20,5 +20,12 @@ router.post('/register', registerValidator, createUser)
  * @access Public
  */
 router.post('/login', loginValidator, login)
+
+/*
+ * @route GET api/user/auth
+ * @desc Returns auth state for token
+ * @access Private
+ */
+router.post('/auth', auth, getAuth)
 
 module.exports = router
