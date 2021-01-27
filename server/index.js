@@ -13,6 +13,11 @@ require('dotenv').config({
 
 const app = express()
 
+// cors config
+if (process.env.NODE_ENV === 'development') {
+	app.use(cors({ origin: process.env.CLIENT_URL }))
+}
+
 // Use body parser
 app.use(
 	bodyParser.urlencoded({
@@ -33,10 +38,6 @@ app.use('/api/restaurant', restaurantRouter)
 app.use('/api/order', orderRouter)
 app.use('/api/menu', menuRouter)
 
-// cors config
-if (process.env.NODE_ENV === 'development') {
-	app.use(cors({ origin: process.env.CLIENT_URL }))
-}
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
