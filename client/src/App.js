@@ -18,9 +18,7 @@ const App = () => {
 	useEffect(() => {
 		store.dispatch(loadUser())
 		const getData = async () => {
-			const res = await axios.get(
-				'http://localhost:5000/api/restaurant/list'
-			)
+			const res = await axios.get('/api/restaurant/list')
 			console.log(res.data)
 		}
 		getData()
