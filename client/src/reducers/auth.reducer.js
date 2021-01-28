@@ -3,7 +3,8 @@ import {
 	LOGIN_SUCCESS,
 	LOGOUT,
 	SIGNUP_FAILED,
-	SIGNUP_SUCCESS
+	SIGNUP_SUCCESS,
+	USER_LOADED
 } from '../actions/types'
 
 const initialState = {
@@ -16,6 +17,13 @@ const initialState = {
 export const auth = (state = initialState, action) => {
 	const { type, payload } = action
 	switch (type) {
+		case USER_LOADED:
+			return {
+				...state,
+				isAuthenticated: true,
+				loading: false,
+				user: payload.user
+			}
 		case SIGNUP_SUCCESS:
 		case LOGIN_SUCCESS:
 			localStorage.setItem('token', payload.token)

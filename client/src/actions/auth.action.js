@@ -40,7 +40,8 @@ export const signUp = (
 
 export const login = (email, password) => async dispatch => {
 	try {
-		const res = await axios.post('user/login', {
+		console.log('in login action')
+		const res = await axios.post('/api/user/login', {
 			email,
 			password
 		})
