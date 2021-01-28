@@ -26,6 +26,6 @@ router.post('/login', loginValidator, login)
  * @desc Returns auth state for token
  * @access Private
  */
-router.post('/auth', auth, getAuth)
+router.get('/auth', auth, getAuth)
 
 module.exports = router
