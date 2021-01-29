@@ -10,13 +10,13 @@ import {
 } from './types'
 import setAuthToken from '../utils/setAuthToken'
 
-export const signUp = (
+export const signup = (
 	name,
 	email,
 	password,
 	userType,
 	address,
-	phone
+	phoneNumber
 ) => async dispatch => {
 	try {
 		const res = await axios.post('/api/user/register', {
@@ -25,7 +25,7 @@ export const signUp = (
 			password,
 			userType,
 			address,
-			phone
+			phoneNumber
 		})
 		dispatch({
 			type: SIGNUP_SUCCESS,
