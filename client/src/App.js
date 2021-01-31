@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // React components
+import RestaurantOnlyRoute from './routing/RestaurantOnlyRoute'
 import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -30,6 +31,11 @@ const App = () => {
 					<Route exact path='/' component={Landing} />
 					<Route exact path='/login' component={Login} />
 					<Route exact path='/signup' component={Signup} />
+					<RestaurantOnlyRoute
+						exact
+						path='/restaurant'
+						component={Restaurant}
+					/>
 					<Route
 						exact
 						path='/restaurant/:id'
