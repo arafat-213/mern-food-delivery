@@ -1,4 +1,5 @@
 import {
+	AUTH_ERROR,
 	LOGIN_FAILED,
 	LOGIN_SUCCESS,
 	LOGOUT,
@@ -37,6 +38,7 @@ export const auth = (state = initialState, action) => {
 		case LOGIN_FAILED:
 		case SIGNUP_FAILED:
 		case LOGOUT:
+		case AUTH_ERROR:
 			localStorage.removeItem('token')
 			return {
 				...state,
