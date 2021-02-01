@@ -1,5 +1,6 @@
 import {
 	AUTH_ERROR,
+	LOAD_MY_RESTAURANT,
 	LOGIN_FAILED,
 	LOGIN_SUCCESS,
 	LOGOUT,
@@ -12,7 +13,8 @@ const initialState = {
 	token: localStorage.getItem('token'),
 	isAuthenticated: false,
 	loading: true,
-	user: null
+	user: null,
+	restaurant: null
 }
 
 export const auth = (state = initialState, action) => {
@@ -46,6 +48,12 @@ export const auth = (state = initialState, action) => {
 				token: null,
 				loading: false,
 				user: null
+			}
+		case LOAD_MY_RESTAURANT:
+			return {
+				...state,
+				restaurant: payload,
+				loading: false
 			}
 		default:
 			return state

@@ -6,7 +6,9 @@ import {
 	LOGOUT,
 	SIGNUP_FAILED,
 	SIGNUP_SUCCESS,
-	USER_LOADED
+	USER_LOADED,
+	RESTAURANT_ERROR,
+	LOAD_MY_RESTAURANT
 } from './types'
 import setAuthToken from '../utils/setAuthToken'
 
@@ -73,6 +75,21 @@ export const loadUser = () => async dispatch => {
 	}
 }
 
+export const loadRestaurant = id => async dispatch => {
+	try {
+		const res = await axios.get(`/api/restaurant/${id}`)
+
+		dispatch({
+			type: LOAD_MY_RESTAURANT,
+			payload: res.data.restaurant
+		})
+	} catch (error) {
+		console.log(error);
+		dispatch({
+			type: RESTAURANT_ERROR
+		})
+	}
+}
 export const logout = () => async dispatch => {
 	dispatch({
 		type: LOGOUT

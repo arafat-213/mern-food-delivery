@@ -6,34 +6,36 @@ import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Restaurant from './pages/Restaurant'
+import MyRestaurant from './pages/MyRestaurant'
+import Home from './pages/Home'
 // Redux
 import { Provider } from 'react-redux'
 import store from './store'
 import { loadUser } from './actions/auth.action'
 // Utils
 import setAuthToken from './utils/setAuthToken'
-import axios from 'axios'
 
 if (localStorage.token) setAuthToken(localStorage.token)
 const App = () => {
 	useEffect(() => {
 		store.dispatch(loadUser())
-		const getData = async () => {
-			const res = await axios.get('/api/restaurant/list')
-			console.log(res.data)
-		}
-		getData()
 	})
 	return (
 		<Provider store={store}>
 			<Router>
 				<Switch>
 					<Route exact path='/' component={Landing} />
+					<Route exact path='/home' component={Home} />
 					<Route exact path='/login' component={Login} />
 					<Route exact path='/signup' component={Signup} />
 					<RestaurantOnlyRoute
 						exact
-						path='/restaurant'
+						path='/myrestaurant'
+						component={MyRestaurant}
+					/>
+					<Route
+						exact
+						path='/restaurant/:id'
 						component={Restaurant}
 					/>
 					<Route
