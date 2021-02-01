@@ -19,6 +19,10 @@ const restaurantSchema = new mongoose.Schema({
 	},
 	description: {
 		type: String
+	},
+	cuisine: {
+		type: Array,
+		default: []
 	}
 })
 

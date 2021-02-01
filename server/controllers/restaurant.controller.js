@@ -9,7 +9,14 @@ module.exports = {
 				return res.status(400).json({
 					errors: errors.array().map(error => error.msg)[0]
 				})
-			const { name, address, phoneNumber, description, menu } = req.body
+			const {
+				name,
+				address,
+				phoneNumber,
+				description,
+				menu,
+				cuisine
+			} = req.body
 			let restaurant = await Restaurant.findOne({ name })
 			if (restaurant)
 				return res.status(400).json({
@@ -28,7 +35,8 @@ module.exports = {
 				address,
 				phoneNumber,
 				description,
-				menu
+				menu,
+				cuisine
 			})
 
 			req.user.restaurant = restaurant._id
