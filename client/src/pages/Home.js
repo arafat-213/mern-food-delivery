@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react'
-
+import RestaurantList from '../components/home/RestaurantList'
 // Redux
 import { connect } from 'react-redux'
 import { listRestaurant } from '../actions/restaurant.action'
 
-const Home = ({ restaurant, listRestaurant }) => {
+const Home = ({ loading, listRestaurant }) => {
 	useEffect(() => {
 		listRestaurant()
 	}, [])
 
-	return <div></div>
+	return !loading && <RestaurantList />
 }
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		restaurant: state.restaurant
+		loading: state.restaurant.loading
 	}
 }
 
