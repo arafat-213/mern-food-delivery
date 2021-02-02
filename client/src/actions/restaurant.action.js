@@ -57,6 +57,7 @@ export const addRestaurant = ({
 			type: ADD_MY_RESTAURANT,
 			payload: res.data.restaurant
 		})
+		// TODO: Set the new token from response
 	} catch (error) {
 		dispatch({
 			type: RESTAURANT_ERROR,

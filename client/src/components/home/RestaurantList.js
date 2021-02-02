@@ -6,12 +6,21 @@ import RestaurantCard from './RestaurantCard'
 // Redux
 import { connect } from 'react-redux'
 
+// Bootstrap
+import CardDeck from 'react-bootstrap/CardDeck'
+
 const RestaurantList = ({ restaurants, loading }) => {
 	return (
-		!loading &&
-		restaurants.map(restaurant => (
-			<RestaurantCard restaurant={restaurant} key={restaurant.id} />
-		))
+		!loading && (
+			<CardDeck>
+				{restaurants.map(restaurant => (
+					<RestaurantCard
+						restaurant={restaurant}
+						key={restaurant.id}
+					/>
+				))}
+			</CardDeck>
+		)
 	)
 }
 
