@@ -39,6 +39,42 @@ module.exports = {
 			})
 		}
 	},
+	getMenuItem: async (req, res) => {
+		try {
+			// Get a menu item by it's id
+			const menuItem = await MenuItem.findOne({
+				_id: req.params.menuItemId
+			})
+			if (!menuItem)
+				return res.status(404).json({
+					error: 'Item not found'
+				})
+			const {
+				itemName,
+				itemPrice,
+				isVeg,
+				_id,
+				itemDescription
+			} = menuItem
+
+			return res.status(200).json({
+				menuItem: {
+					itemName,
+					itemPrice,
+					isVeg,
+					_id,
+					itemDescription
+				}
+			})
+		} catch (error) {
+			console.error(error)
+			res.status(500).json({
+				error: error.msg
+			})
+		}
+	},
+	// TODO: Update end point for menuItem
 	updateMenuItem: async (req, res) => {},
+	// TODO: Delete end point for menuItem
 	deleteMenuItem: async (req, res) => {}
 }

@@ -1,6 +1,9 @@
 const express = require('express')
 const { auth, restaurantProtected } = require('../middleware/auth.middleware')
-const { createMenuItem } = require('../controllers/menuItem.controller')
+const {
+	createMenuItem,
+	getMenuItem
+} = require('../controllers/menuItem.controller')
 const router = express.Router()
 
 /*
@@ -9,5 +12,12 @@ const router = express.Router()
  * @access Private/restaurant
  */
 router.post('/', auth, restaurantProtected, createMenuItem)
+
+/*
+ * @route GET api/menu
+ * @desc Get a menu item by its id
+ * @access Public
+ */
+router.get('/:menuItemId', getMenuItem)
 
 module.exports = router
