@@ -5,6 +5,7 @@ import Menu from '../components/Restaurant/Menu'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getRestaurantById } from '../actions/restaurant.action'
+import RestaurantHeader from '../components/Restaurant/RestaurantHeader'
 
 const Restaurant = ({ getRestaurantById, restaurant }) => {
 	let params = useParams()
@@ -14,7 +15,7 @@ const Restaurant = ({ getRestaurantById, restaurant }) => {
 
 	return restaurant ? (
 		<div>
-			<h1>{restaurant.name}</h1>
+			<RestaurantHeader restaurant={restaurant} />
 			<Menu menu={restaurant.menu} />
 		</div>
 	) : (
