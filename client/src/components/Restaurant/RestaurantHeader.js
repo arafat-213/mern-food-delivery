@@ -13,7 +13,7 @@ const RestaurantHeader = ({
 				<h1>{name}</h1>
 			</Card.Title>
 			<Card.Body>
-				{address && <Card.Text>Address {address}</Card.Text>}
+				{address && <Card.Text>Address: {address}</Card.Text>}
 				{phoneNumber && (
 					<Card.Text>phoneNumber:{phoneNumber}</Card.Text>
 				)}
