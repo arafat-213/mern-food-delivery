@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Restaurant from './pages/Restaurant'
 import MyRestaurant from './pages/MyRestaurant'
 import Home from './pages/Home'
+import Cart from './pages/Cart'
 // Redux
 import { Provider } from 'react-redux'
 import store from './store'
@@ -43,6 +44,7 @@ const App = () => {
 						path='/restaurant/:id'
 						component={Restaurant}
 					/>
+					<Route exact path='/cart' component={Cart} />
 				</Switch>
 				<Fragment>
 					<div>Hello World</div>

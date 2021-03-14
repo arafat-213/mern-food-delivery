@@ -3,12 +3,12 @@ import { Button } from 'react-bootstrap'
 
 // Bootstrap
 import Card from 'react-bootstrap/Card'
-const CartItem = ({ item: { name, price } }) => {
+const CartItem = ({ item: { itemName, itemPrice } }) => {
 	return (
 		<Card className='w-100'>
-			<Card.Title>{name}</Card.Title>
+			<Card.Title>{itemName}</Card.Title>
 			<Card.Body>
-				<Card.Text>Price : {price}</Card.Text>
+				<Card.Text>Price : {itemPrice}</Card.Text>
 				<Button variant='danger'>Remove</Button>
 			</Card.Body>
 		</Card>

@@ -1,23 +1,26 @@
 import React from 'react'
 
-import CartItem from './CartItem'
+import CartItem from '../components/Cart/CartItem'
+import EmptyCart from '../components/Cart/EmptyCart'
+
 // Redux
 import { connect } from 'react-redux'
 
-const Cart = ({ cart }) => {
-	return (
+const Cart = ({ items }) =>
+	items.length === 0 ? (
+		<EmptyCart />
+	) : (
 		<div>
 			<h1>Cart</h1>
-			{cart.map(item => (
+			{items.map(item => (
 				<CartItem item={item} />
 			))}
 		</div>
 	)
-}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		cart: state.cart
+		items: state.cart.items
 	}
 }
 
