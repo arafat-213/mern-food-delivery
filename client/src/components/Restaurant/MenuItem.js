@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { addToCart } from '../../actions/cart.action'
 
 // Bootstrap
 import Card from 'react-bootstrap/Card'
 import { Button } from 'react-bootstrap'
 
 const MenuItem = ({
-	menuItem: { itemName, itemPrice, itemDescription, isVeg, isAvailable }
+	addToCart,
+	menuItem: { itemName, itemPrice, itemDescription, isVeg, isAvailable, _id }
 }) => {
 	return (
 		<Card style={{ width: '100%' }}>
@@ -18,10 +21,19 @@ const MenuItem = ({
 				<Card.Text>
 					is Veg? <span>{isVeg.toString()}</span>
 				</Card.Text>
-				<Button disabled={!isAvailable}> Add to cart </Button>
+				<Button disabled={!isAvailable} onClick={() => addToCart(_id)}>
+					{' '}
+					Add to cart{' '}
+				</Button>
 			</Card.Body>
 		</Card>
 	)
 }
 
-export default MenuItem
+const mapStateToProps = (state, ownProps) => {
+	return {
+		prop: state.prop
+	}
+}
+
+export default connect(mapStateToProps, { addToCart })(MenuItem)
