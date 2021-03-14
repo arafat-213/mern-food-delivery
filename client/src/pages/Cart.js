@@ -16,6 +16,7 @@ const Cart = ({ items }) =>
 				<CartItem item={item} />
 			))}
 		</div>
+		// TODO: add place order button and total amount
 	)
 
 const mapStateToProps = (state, ownProps) => {
