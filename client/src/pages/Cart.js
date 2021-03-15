@@ -5,9 +5,15 @@ import EmptyCart from '../components/Cart/EmptyCart'
 
 // Redux
 import { connect } from 'react-redux'
+import PriceDetails from '../components/Cart/PriceDetails'
 
-const Cart = ({ items }) =>
-	items.length === 0 ? (
+const Cart = ({ items }) => {
+	let totalPrice = 0
+	const calculateTotalPrice = () => {
+		items.forEach(item => (totalPrice += item.itemPrice))
+		return totalPrice
+	}
+	return items.length === 0 ? (
 		<EmptyCart />
 	) : (
 		<div>
@@ -15,9 +21,11 @@ const Cart = ({ items }) =>
 			{items.map(item => (
 				<CartItem item={item} />
 			))}
+			<PriceDetails totalPrice={calculateTotalPrice()} />
 		</div>
-		// TODO: add place order button and total amount
 	)
+	// TODO: add place order button and total amount
+}
 
 const mapStateToProps = (state, ownProps) => {
 	return {
