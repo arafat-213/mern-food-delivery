@@ -1,7 +1,13 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, CART_ERROR } from '../actions/types'
+import {
+	ADD_TO_CART,
+	REMOVE_FROM_CART,
+	CART_ERROR,
+	ADD_COOKING_INSTRUCTIONS
+} from '../actions/types'
 
 const initialState = {
-	items: []
+	items: [],
+	cookingInstructions: null
 }
 
 export const cart = (state = initialState, action) => {
@@ -17,6 +23,11 @@ export const cart = (state = initialState, action) => {
 			return {
 				...state,
 				items: state.items.filter(item => item._id !== payload)
+			}
+		case ADD_COOKING_INSTRUCTIONS:
+			return {
+				...state,
+				cookingInstructions: payload
 			}
 		case CART_ERROR:
 			// TODO:Display error

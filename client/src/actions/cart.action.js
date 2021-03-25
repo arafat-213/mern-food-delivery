@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { CART_ERROR, ADD_TO_CART, REMOVE_FROM_CART } from './types'
+import {
+	CART_ERROR,
+	ADD_TO_CART,
+	REMOVE_FROM_CART,
+	ADD_COOKING_INSTRUCTIONS
+} from './types'
 
 export const addToCart = (id, qty) => async dispatch => {
 	try {
@@ -16,5 +21,12 @@ export const removeFromCart = id => async dispatch => {
 	dispatch({
 		type: REMOVE_FROM_CART,
 		payload: id
+	})
+}
+
+export const addCookingInstructions = cookingInstructions => dispatch => {
+	dispatch({
+		type: ADD_COOKING_INSTRUCTIONS,
+		payload: cookingInstructions
 	})
 }
