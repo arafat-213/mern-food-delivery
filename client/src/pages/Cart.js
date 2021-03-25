@@ -13,16 +13,9 @@ import Button from 'react-bootstrap/Button'
 import CookingInstructions from '../components/Cart/CookingInstructions'
 import RestaurantHeader from '../components/Restaurant/RestaurantHeader'
 
-const Cart = ({
-	items,
-	restaurant,
-	cookingInstructions,
-	createOrder,
-	getOrders
-}) => {
+const Cart = ({ items, restaurant, cookingInstructions, createOrder }) => {
 	let totalPrice = 0
 	const calculateTotalPrice = () => {
-		getOrders()
 		items.forEach(item => (totalPrice += item.itemPrice))
 		return totalPrice
 	}
@@ -62,4 +55,4 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, { createOrder, getOrders })(Cart)
+export default connect(mapStateToProps, { createOrder })(Cart)

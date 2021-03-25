@@ -15,6 +15,7 @@ import store from './store'
 import { loadUser } from './actions/auth.action'
 // Utils
 import setAuthToken from './utils/setAuthToken'
+import Orders from './pages/Orders'
 
 if (localStorage.token) setAuthToken(localStorage.token)
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
 						component={Restaurant}
 					/>
 					<Route exact path='/cart' component={Cart} />
+					<Route exact path='/orders' component={Orders} />
 				</Switch>
 				<Fragment>
 					<div>Hello World</div>
