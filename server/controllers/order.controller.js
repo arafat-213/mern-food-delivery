@@ -100,7 +100,7 @@ module.exports = {
 							sort
 						},
 						populate: {
-							path: 'restaurant',
+							path: 'orderContent restaurant',
 							select: '-owner -__v -id -menu -description'
 						}
 					})
