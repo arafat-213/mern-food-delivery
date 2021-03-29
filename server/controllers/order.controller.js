@@ -1,10 +1,11 @@
 const Order = require('../models/order.model')
+const MenuItem = require('../models/menuItem.model')
 const Restaurant = require('../models/restaurant.model')
 
 module.exports = {
 	createOrder: async (req, res) => {
 		try {
-			let totalAmount = 0
+			var totalAmount = 0
 			const { restaurant, cookingInstructions, orderContent } = req.body
 			let restaurantExists = await Restaurant.findOne({ _id: restaurant })
 			if (!restaurantExists)
@@ -12,6 +13,10 @@ module.exports = {
 					error: 'Invalid restaurant selected'
 				})
 
+			for (const itemId of orderContent) {
+				let item = await MenuItem.findOne({ _id: itemId })
+				totalAmount += item.itemPrice
+			}
 			let order = new Order({
 				customer: req.user._id,
 				restaurant,
@@ -20,13 +25,11 @@ module.exports = {
 				orderContent,
 				address: req.user.address
 			})
-			await order.save()
 
+			await order.save()
 			await order
 				.populate('orderContent', '-isAvailable -__v -_id -restaurant')
 				.execPopulate()
-			order.orderContent.map(item => (totalAmount += item.itemPrice))
-			order.totalAmount = totalAmount
 			res.status(201).json({ order })
 		} catch (error) {
 			console.error(error)
