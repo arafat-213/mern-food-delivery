@@ -21,7 +21,7 @@ export const createOrder = (
 
 export const getOrders = () => async dispatch => {
 	try {
-		const { data } = await axios.get(`api/order`)
+		const { data } = await axios.get(`api/order/?sortBy=createdAt:desc`)
 		dispatch({
 			type: GET_ORDERS,
 			payload: data.orders
