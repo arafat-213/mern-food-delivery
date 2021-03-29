@@ -1,7 +1,8 @@
 import { CREATE_ORDER, GET_ORDERS } from '../actions/types'
 
 const initialState = {
-	orders: []
+	orders: [],
+	loading: true
 }
 
 export const order = (state = initialState, action) => {
@@ -13,6 +14,7 @@ export const order = (state = initialState, action) => {
 		case GET_ORDERS:
 			return {
 				...state,
+				loading: false,
 				orders: payload
 			}
 		default:
