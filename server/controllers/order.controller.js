@@ -79,12 +79,8 @@ module.exports = {
 								skip: parseInt(req.query.skip)
 							},
 							populate: {
-								path: 'customer',
-								select: '-userType -_id -__v'
-							},
-							populate: {
-								path: 'orderContent',
-								select: '-_id -__v'
+								path: 'orderContent customer',
+								select: '-_id -__v -userType'
 							}
 						}
 					})
