@@ -9,6 +9,8 @@ import Restaurant from './pages/Restaurant'
 import MyRestaurant from './pages/MyRestaurant'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
+import NavigationBar from './components/Navbar/NavigationBar'
+
 // Redux
 import { Provider } from 'react-redux'
 import store from './store'
@@ -25,6 +27,7 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<Router>
+				<NavigationBar />
 				<Switch>
 					<Route exact path='/' component={Landing} />
 					<Route exact path='/home' component={Home} />
