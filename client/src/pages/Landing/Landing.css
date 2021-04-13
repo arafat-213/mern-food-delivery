@@ -1,0 +1,29 @@
+:root {
+	--bgcolor: rgb(35, 255, 238);
+	--bgcolorgradient: radial-gradient(
+		circle,
+		rgba(35, 255, 238, 1) 2%,
+		rgba(57, 237, 84, 1) 100%
+	);
+}
+
+svg {
+	overflow-x: hidden;
+}
+
+.landing {
+	overflow-x: hidden;
+	/* background: var(--bgcolor); */
+	/* background: var(--bgcolorgradient); */
+
+	min-width: 100vw;
+}
+
+.h-100 {
+	min-height: calc(100vh - 56px) !important;
+}
+
+.waves {
+	/* height: 40vh; */
+	width: 100vw;
+}
