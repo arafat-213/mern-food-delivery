@@ -13,17 +13,19 @@ const CustomerNavBar = ({ isAuthenticated }) => {
 			sticky='top'
 			collapseOnSelect
 			expand='lg'
-			bg='dark'
-			variant='dark'>
+			bg='light'
+			variant='light'>
 			<Navbar.Brand as={NavLink} to='/home'>
 				FoodHub
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 			<Navbar.Collapse id='responsive-navbar-nav'>
 				<Nav activeKey='/home' className='mr-auto'>
-					<Nav.Link as={NavLink} to='/orders'>
-						Orders
-					</Nav.Link>
+					{isAuthenticated && (
+						<Nav.Link as={NavLink} to='/orders'>
+							Orders
+						</Nav.Link>
+					)}
 					<Nav.Link as={NavLink} to='/cart'>
 						Cart
 					</Nav.Link>
