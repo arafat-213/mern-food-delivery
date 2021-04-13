@@ -6,14 +6,16 @@ import CustomerOrderList from '../components/Order/CustomerOrderList'
 import { connect } from 'react-redux'
 import { getOrders } from '../actions/order.action'
 
-const Orders = ({ getOrders, loading, userType }) => {
+const Orders = ({ getOrders, loading, user }) => {
 	useEffect(() => {
 		getOrders()
 	}, [getOrders])
 	return (
 		<div>
 			Orders page
-			{!loading && userType === 'customer' && <CustomerOrderList />}
+			{!loading && user && user.userType === 'customer' && (
+				<CustomerOrderList />
+			)}
 		</div>
 	)
 }
@@ -22,7 +24,7 @@ const mapStateToProps = state => {
 	return {
 		orders: state.order.orders,
 		loading: state.order.loading,
-		userType: state.auth.user.userType
+		user: state.auth.user
 	}
 }
 
