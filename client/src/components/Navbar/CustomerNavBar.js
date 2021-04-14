@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 // Redux
@@ -8,25 +8,35 @@ import { connect } from 'react-redux'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
 const CustomerNavBar = ({ isAuthenticated }) => {
+	const [expanded, setExpanded] = useState(false)
+
+	const closeNavbar = () => setExpanded(false)
 	return (
 		<Navbar
 			sticky='top'
 			collapseOnSelect
 			expand='lg'
 			bg='light'
-			variant='light'>
-			<Navbar.Brand as={NavLink} to='/home'>
-				FoodHub
+			variant='light'
+			expanded={expanded}>
+			<Navbar.Brand as={NavLink} to='/home' onClick={closeNavbar}>
+				FoodZilla
 			</Navbar.Brand>
-			<Navbar.Toggle aria-controls='responsive-navbar-nav' />
+			<Navbar.Toggle
+				aria-controls='responsive-navbar-nav'
+				onClick={() => setExpanded(expanded ? false : 'expanded')}
+			/>
 			<Navbar.Collapse id='responsive-navbar-nav'>
 				<Nav activeKey='/home' className='mr-auto'>
 					{isAuthenticated && (
-						<Nav.Link as={NavLink} to='/orders'>
+						<Nav.Link
+							as={NavLink}
+							to='/orders'
+							onClick={closeNavbar}>
 							Orders
 						</Nav.Link>
 					)}
-					<Nav.Link as={NavLink} to='/cart'>
+					<Nav.Link as={NavLink} to='/cart' onClick={closeNavbar}>
 						Cart
 					</Nav.Link>
 					<NavDropdown title='Account' id='collasible-nav-dropdown'>
@@ -47,10 +57,16 @@ const CustomerNavBar = ({ isAuthenticated }) => {
 				</Nav>
 				{!isAuthenticated && (
 					<Nav>
-						<Nav.Link as={NavLink} to='/login'>
+						<Nav.Link
+							as={NavLink}
+							to='/login'
+							onClick={closeNavbar}>
 							Log in
 						</Nav.Link>
-						<Nav.Link as={NavLink} to='/signup'>
+						<Nav.Link
+							as={NavLink}
+							to='/signup'
+							onClick={closeNavbar}>
 							Sign up
 						</Nav.Link>
 					</Nav>

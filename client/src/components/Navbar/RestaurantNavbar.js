@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 // Redux
@@ -7,23 +7,31 @@ import { NavLink } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
 const RestaurantNavbar = () => {
+	const [expanded, setExpanded] = useState(false)
+
+	const closeNavbar = () => setExpanded(false)
+
 	return (
 		<Navbar
 			sticky='top'
 			collapseOnSelect
 			expand='lg'
 			bg='dark'
-			variant='dark'>
-			<Navbar.Brand as={NavLink} to='/home'>
-				FoodHub
+			variant='dark'
+			expanded={expanded}>
+			<Navbar.Brand as={NavLink} to='/home' onClick={closeNavbar}>
+				FoodZilla
 			</Navbar.Brand>
-			<Navbar.Toggle aria-controls='responsive-navbar-nav' />
+			<Navbar.Toggle
+				aria-controls='responsive-navbar-nav'
+				onClick={() => setExpanded(expanded ? false : 'expanded')}
+			/>
 			<Navbar.Collapse id='responsive-navbar-nav'>
 				<Nav activeKey='/home' className='mr-auto'>
-					<Nav.Link as={NavLink} to='/orders'>
+					<Nav.Link as={NavLink} to='/orders' onClick={closeNavbar}>
 						Orders
 					</Nav.Link>
-					<Nav.Link as={NavLink} to='/cart'>
+					<Nav.Link as={NavLink} to='/cart' onClick={closeNavbar}>
 						Menu
 					</Nav.Link>
 					<NavDropdown title='Account' id='collasible-nav-dropdown'>
