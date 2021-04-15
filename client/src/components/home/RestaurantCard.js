@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 //Bootstrap
 import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
+// CSS
+import './RestaurantCard.css'
 
 const RestaurantCard = ({ restaurant: { name, cuisine, id } }) => {
 	let ratings = Math.floor(Math.random() * 6)
@@ -15,14 +17,19 @@ const RestaurantCard = ({ restaurant: { name, cuisine, id } }) => {
 				variant='top'
 				src='https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F9%2F2012%2F04%2Fimages-sys-201110-a-low-calorie-meals.jpg'
 			/>
+
 			<Card.Body className='pb-0'>
+				<div className='card-img-overlay d-flex justify-content-between'>
+					<Badge pill variant={ratingsClass}>
+						{ratings} / 5
+					</Badge>
+					<Badge pill variant='light' className='text-secondary'>
+						&hearts;
+					</Badge>
+				</div>
 				<Link to={`/restaurant/${id}`} className='text-decoration-none'>
 					<Card.Title className='text-info py-0 my-0 d-flex justify-content-between'>
 						<span>{name}</span>
-						<Badge pill variant={ratingsClass}>
-							{ratings}
-							{'/5'}
-						</Badge>
 					</Card.Title>
 					<Card.Text className='text-secondary pb-0 mb-0'>
 						{cuisine && cuisine.length > 0

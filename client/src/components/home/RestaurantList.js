@@ -12,7 +12,7 @@ import CardDeck from 'react-bootstrap/CardDeck'
 const RestaurantList = ({ restaurants, loading }) => {
 	return (
 		!loading && (
-			<CardDeck>
+			<CardDeck className='mx-0 my-2'>
 				{restaurants.map(restaurant => (
 					<RestaurantCard
 						restaurant={restaurant}
