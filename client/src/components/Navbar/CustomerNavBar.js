@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // Bootstrap
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap'
 
-const CustomerNavBar = ({ isAuthenticated }) => {
+const CustomerNavBar = ({ isAuthenticated, cartItems }) => {
 	const [expanded, setExpanded] = useState(false)
 
 	const closeNavbar = () => setExpanded(false)
@@ -37,7 +37,10 @@ const CustomerNavBar = ({ isAuthenticated }) => {
 						</Nav.Link>
 					)}
 					<Nav.Link as={NavLink} to='/cart' onClick={closeNavbar}>
-						Cart
+						Cart{' '}
+						{cartItems.length > 0 && (
+							<Badge variant='success'>{cartItems.length}</Badge>
+						)}
 					</Nav.Link>
 					<NavDropdown title='Account' id='collasible-nav-dropdown'>
 						<NavDropdown.Item href='#action/3.1'>
@@ -78,7 +81,8 @@ const CustomerNavBar = ({ isAuthenticated }) => {
 
 const mapStateToProps = state => {
 	return {
-		isAuthenticated: state.auth.isAuthenticated
+		isAuthenticated: state.auth.isAuthenticated,
+		cartItems: state.cart.items
 	}
 }
 
