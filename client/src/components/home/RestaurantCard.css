@@ -1,3 +1,10 @@
 .card-img-overlay {
-	max-height: 58px;
+	max-height: 4rem;
+}
+
+.restaurant-img {
+	height: 100%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }

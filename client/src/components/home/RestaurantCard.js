@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 //Bootstrap
 import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
 // CSS
 import './RestaurantCard.css'
 
@@ -12,32 +15,43 @@ const RestaurantCard = ({ restaurant: { name, cuisine, id } }) => {
 	const ratingsClass =
 		ratings > 3.5 ? 'success' : ratings > 2.5 ? 'warning' : 'danger'
 	return (
-		<Card>
-			<Card.Img
-				variant='top'
-				src='https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F9%2F2012%2F04%2Fimages-sys-201110-a-low-calorie-meals.jpg'
-			/>
-
-			<Card.Body className='pb-0'>
-				<div className='card-img-overlay d-flex justify-content-between'>
-					<Badge pill variant={ratingsClass}>
-						{ratings} / 5
-					</Badge>
-					<Badge pill variant='light' className='text-secondary'>
-						&hearts;
-					</Badge>
-				</div>
-				<Link to={`/restaurant/${id}`} className='text-decoration-none'>
-					<Card.Title className='text-info py-0 my-0 d-flex justify-content-between'>
-						<span>{name}</span>
-					</Card.Title>
-					<Card.Text className='text-secondary pb-0 mb-0'>
-						{cuisine && cuisine.length > 0
-							? cuisine.toString()
-							: 'Just Food'}
-					</Card.Text>
-				</Link>
-			</Card.Body>
+		<Card className='restaurant-card text-wrap'>
+			<Link to={`/restaurant/${id}`} className='text-decoration-none'>
+				<Row className='no-gutters'>
+					<Col xs={4}>
+						<div className='card-img-overlay p-0 text-left'>
+							<Badge pill variant={ratingsClass}>
+								{ratings} / 5
+							</Badge>
+						</div>
+						<Card.Img
+							variant='top'
+							className='restaurant-img'
+							src='https://etimg.etb2bimg.com/photo/75161189.cms'
+						/>
+					</Col>
+					<Col xs={8}>
+						<Card.Body className='pb-0 pt-2'>
+							<div className='card-img-overlay p-0 text-right'>
+								<Badge
+									pill
+									variant='light'
+									className='text-secondary'>
+									&hearts;
+								</Badge>
+							</div>
+							<Card.Title className='text-info py-0 my-0 d-flex justify-content-between'>
+								<span className='text-truncate'>{name}</span>
+							</Card.Title>
+							<Card.Text className='text-secondary text-truncate pb-0 mb-0'>
+								{cuisine && cuisine.length > 0
+									? cuisine.toString()
+									: 'Just Food'}
+							</Card.Text>
+						</Card.Body>
+					</Col>
+				</Row>
+			</Link>
 		</Card>
 	)
 }

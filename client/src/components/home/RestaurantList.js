@@ -7,19 +7,25 @@ import RestaurantCard from './RestaurantCard'
 import { connect } from 'react-redux'
 
 // Bootstrap
-import CardDeck from 'react-bootstrap/CardDeck'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 const RestaurantList = ({ restaurants, loading }) => {
 	return (
 		!loading && (
-			<CardDeck className='mx-0 my-2'>
-				{restaurants.map(restaurant => (
-					<RestaurantCard
-						restaurant={restaurant}
-						key={restaurant.id}
-					/>
-				))}
-			</CardDeck>
+			<Container fluid>
+				<Row>
+					{restaurants.map(restaurant => (
+						<Col className='my-2' lg={4} md={6} sm={12}>
+							<RestaurantCard
+								restaurant={restaurant}
+								key={restaurant.id}
+							/>
+						</Col>
+					))}
+				</Row>
+			</Container>
 		)
 	)
 }
