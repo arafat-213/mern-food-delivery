@@ -12,8 +12,15 @@ import { createOrder, getOrders } from '../actions/order.action'
 import Button from 'react-bootstrap/Button'
 import CookingInstructions from '../components/Cart/CookingInstructions'
 import RestaurantHeader from '../components/Restaurant/RestaurantHeader'
+import { Link } from 'react-router-dom'
 
-const Cart = ({ items, restaurant, cookingInstructions, createOrder }) => {
+const Cart = ({
+	items,
+	restaurant,
+	cookingInstructions,
+	createOrder,
+	isAuthenticated
+}) => {
 	let totalPrice = 0
 	const calculateTotalPrice = () => {
 		items.forEach(item => (totalPrice += item.itemPrice))
@@ -39,10 +46,17 @@ const Cart = ({ items, restaurant, cookingInstructions, createOrder }) => {
 			<Button
 				variant='success'
 				className='w-25 p-2'
+				disabled={!isAuthenticated}
 				onClick={submitOrder}>
 				{' '}
-				Place order TODO: Add order action/reducer
+				Place order
 			</Button>
+			{!isAuthenticated && (
+				<p>
+					You need to sign in first to place the order. Click{' '}
+					<Link to='/login'>here</Link>to sign in
+				</p>
+			)}
 		</div>
 	)
 }
@@ -51,7 +65,8 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		items: state.cart.items,
 		cookingInstructions: state.cart.cookingInstructions,
-		restaurant: state.restaurant.restaurant
+		restaurant: state.restaurant.restaurant,
+		isAuthenticated: state.auth.isAuthenticated
 	}
 }
 
