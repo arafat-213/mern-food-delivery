@@ -10,6 +10,9 @@ import { createOrder, getOrders } from '../actions/order.action'
 
 // Bootstrap
 import Button from 'react-bootstrap/Button'
+import Containter from 'react-bootstrap/Container'
+
+// Components
 import CookingInstructions from '../components/Cart/CookingInstructions'
 import RestaurantHeader from '../components/Restaurant/RestaurantHeader'
 import { Link } from 'react-router-dom'
@@ -35,7 +38,7 @@ const Cart = ({
 	return items.length === 0 ? (
 		<EmptyCart />
 	) : (
-		<div>
+		<Containter>
 			<RestaurantHeader restaurant={restaurant} />
 			<h1>Cart</h1>
 			{items.map(item => (
@@ -52,12 +55,12 @@ const Cart = ({
 				Place order
 			</Button>
 			{!isAuthenticated && (
-				<p>
+				<p className='mt-2'>
 					You need to sign in first to place the order. Click{' '}
-					<Link to='/login'>here</Link>to sign in
+					<Link to='/login'>here</Link> to sign in
 				</p>
 			)}
-		</div>
+		</Containter>
 	)
 }
 

@@ -5,21 +5,28 @@ import { removeFromCart } from '../../actions/cart.action'
 
 // Bootstrap
 import Card from 'react-bootstrap/Card'
+
 const CartItem = ({ removeFromCart, item: { itemName, itemPrice, _id } }) => {
 	return (
-		<Card className='w-100'>
-			<Card.Title>{itemName}</Card.Title>
-			<Card.Body>
-				<Card.Text>Price : {itemPrice}</Card.Text>
-				<Button variant='danger' onClick={() => removeFromCart(_id)}>
-					Remove
-				</Button>
-			</Card.Body>
+		<Card className='my-2 px-2'>
+			<div className='d-flex align-content-center justify-content-between'>
+				<div>
+					<Card.Title>{itemName}</Card.Title>
+					<Card.Text>Price : {itemPrice}</Card.Text>
+				</div>
+				<div>
+					<Button
+						variant='danger'
+						onClick={() => removeFromCart(_id)}>
+						<i class='fas fa-minus-circle'></i>
+					</Button>
+				</div>
+			</div>
 		</Card>
 	)
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
 	return {
 		prop: state.prop
 	}
