@@ -32,7 +32,9 @@ const MenuItem = ({
 							<p className='pb-0 h6 text-secondary'>
 								{itemDescription}
 							</p>
-							<p className='h5 text-dark'>&#x20B9;{itemPrice}</p>
+							<p className='h5 text-dark'>
+								{itemPrice.toFixed(2)} &#x20B9;
+							</p>
 						</Card.Text>
 						<Button
 							variant='outline-success'

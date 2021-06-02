@@ -12,7 +12,9 @@ const CartItem = ({ removeFromCart, item: { itemName, itemPrice, _id } }) => {
 			<div className='d-flex align-content-center justify-content-between'>
 				<div>
 					<Card.Title>{itemName}</Card.Title>
-					<Card.Text>Price : {itemPrice}</Card.Text>
+					<Card.Text>
+						Price : {itemPrice.toFixed(2)} &#x20B9;
+					</Card.Text>
 				</div>
 				<div>
 					<Button

@@ -12,7 +12,6 @@ const Orders = ({ getOrders, loading, user }) => {
 	}, [getOrders])
 	return (
 		<div>
-			Orders page
 			{!loading && user && user.userType === 'customer' && (
 				<CustomerOrderList />
 			)}
