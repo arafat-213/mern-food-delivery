@@ -2,7 +2,8 @@ import {
 	ADD_TO_CART,
 	REMOVE_FROM_CART,
 	CART_ERROR,
-	ADD_COOKING_INSTRUCTIONS
+	ADD_COOKING_INSTRUCTIONS,
+	CLEAR_CART
 } from '../actions/types'
 
 const initialState = {
@@ -23,6 +24,11 @@ export const cart = (state = initialState, action) => {
 			return {
 				...state,
 				items: state.items.filter(item => item._id !== payload)
+			}
+		case CLEAR_CART:
+			return {
+				...state,
+				items: []
 			}
 		case ADD_COOKING_INSTRUCTIONS:
 			return {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
 	CART_ERROR,
+	CLEAR_CART,
 	ADD_TO_CART,
 	REMOVE_FROM_CART,
 	ADD_COOKING_INSTRUCTIONS
@@ -21,6 +22,12 @@ export const removeFromCart = id => async dispatch => {
 	dispatch({
 		type: REMOVE_FROM_CART,
 		payload: id
+	})
+}
+
+export const clearCart = () => async dispatch => {
+	dispatch({
+		type: CLEAR_CART
 	})
 }
 

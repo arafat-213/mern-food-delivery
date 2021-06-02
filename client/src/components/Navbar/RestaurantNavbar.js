@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 // Redux
-
+import { connect } from 'react-redux'
+import { logout } from '../../actions/auth.action'
 // Bootstrap
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
-const RestaurantNavbar = () => {
+const RestaurantNavbar = ({ logout }) => {
 	const [expanded, setExpanded] = useState(false)
 
 	const closeNavbar = () => setExpanded(false)
@@ -45,7 +46,7 @@ const RestaurantNavbar = () => {
 							Need help
 						</NavDropdown.Item>
 						<NavDropdown.Divider />
-						<NavDropdown.Item href='#action/3.4'>
+						<NavDropdown.Item onClick={logout}>
 							Sign out
 						</NavDropdown.Item>
 					</NavDropdown>
@@ -55,4 +56,4 @@ const RestaurantNavbar = () => {
 	)
 }
 
-export default RestaurantNavbar
+export default connect(null, { logout })(RestaurantNavbar)

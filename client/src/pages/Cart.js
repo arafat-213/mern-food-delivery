@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 import CartItem from '../components/Cart/CartItem'
 import EmptyCart from '../components/Cart/EmptyCart'
@@ -6,7 +7,8 @@ import PriceDetails from '../components/Cart/PriceDetails'
 
 // Redux
 import { connect } from 'react-redux'
-import { createOrder, getOrders } from '../actions/order.action'
+import { createOrder } from '../actions/order.action'
+import { clearCart } from '../actions/cart.action'
 
 // Bootstrap
 import Button from 'react-bootstrap/Button'
@@ -22,6 +24,7 @@ const Cart = ({
 	restaurant,
 	cookingInstructions,
 	createOrder,
+	clearCart,
 	isAuthenticated
 }) => {
 	let totalPrice = 0
@@ -34,6 +37,8 @@ const Cart = ({
 		e.preventDefault()
 		const orderContent = items.map(item => item._id)
 		createOrder(restaurant._id, cookingInstructions, orderContent)
+		clearCart()
+		return <Redirect to='/orders' />
 	}
 	return items.length === 0 ? (
 		<EmptyCart />
@@ -73,4 +78,4 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-export default connect(mapStateToProps, { createOrder })(Cart)
+export default connect(mapStateToProps, { createOrder, clearCart })(Cart)

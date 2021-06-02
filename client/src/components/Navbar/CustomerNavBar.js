@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 // Redux
 import { connect } from 'react-redux'
-
+import { logout } from '../../actions/auth.action'
 // Bootstrap
 import { Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap'
 
-const CustomerNavBar = ({ isAuthenticated, cartItems }) => {
+const CustomerNavBar = ({ isAuthenticated, cartItems, logout }) => {
 	const [expanded, setExpanded] = useState(false)
 
 	const closeNavbar = () => setExpanded(false)
@@ -53,7 +53,7 @@ const CustomerNavBar = ({ isAuthenticated, cartItems }) => {
 							Something
 						</NavDropdown.Item>
 						<NavDropdown.Divider />
-						<NavDropdown.Item href='#action/3.4'>
+						<NavDropdown.Item onClick={logout}>
 							Sign out
 						</NavDropdown.Item>
 					</NavDropdown>
@@ -86,4 +86,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps)(CustomerNavBar)
+export default connect(mapStateToProps, { logout })(CustomerNavBar)
